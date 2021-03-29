@@ -17,6 +17,11 @@
 FROM ubuntu:18.04
 
 ENV REBUILD_COUNTER=0
+ARG QT5_MINOR
+ARG QT5_MICRO
+
+ENV QT5_VERSION=qt5${QT5_MINOR}
+ENV QT5_PPA_VERSION=qt-5.${QT5_MINOR}.${QT5_MICRO}
 
 RUN set -x \
     && apt-get update -y \
@@ -24,6 +29,7 @@ RUN set -x \
         apt-transport-https \
         ca-certificates \
         software-properties-common \
+    && add-apt-repository ppa:beineri/opt-${QT5_PPA_VERSION}-bionic \
     && add-apt-repository ppa:phoerious/keepassxc \
     && apt-get update -y \
     && apt-get upgrade -y \
@@ -54,15 +60,12 @@ RUN set -x \
         libpcsclite-dev \
         locales \
         metacity \
-        qt5-default \
-        qtbase5-dev \
-        qtbase5-private-dev \
-        qttools5-dev \
-        qttools5-dev-tools \
-        qt5-image-formats-plugins \
-        qttranslations5-l10n \
-        libqt5svg5-dev \
-        libqt5x11extras5-dev \
+        ${QT5_VERSION}base \
+        ${QT5_VERSION}svg \
+        ${QT5_VERSION}imageformats \
+        ${QT5_VERSION}tools \
+        ${QT5_VERSION}translations \
+        ${QT5_VERSION}x11extras \
         xclip \
         xvfb \
         zlib1g-dev \
