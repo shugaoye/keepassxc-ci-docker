@@ -18,10 +18,10 @@ FROM ubuntu:18.04
 
 ENV REBUILD_COUNTER=0
 ARG QT5_MINOR
-ARG QT5_MICRO
+ARG QT5_PATCH
 
 ENV QT5_VERSION=qt5${QT5_MINOR}
-ENV QT5_PPA_VERSION=qt-5.${QT5_MINOR}.${QT5_MICRO}
+ENV QT5_PPA_VERSION=qt-5.${QT5_MINOR}.${QT5_PATCH}
 
 RUN set -x \
     && apt-get update -y \
@@ -58,6 +58,7 @@ RUN set -x \
         libykpers-1-dev \
         libusb-1.0-0-dev \
         libpcsclite-dev \
+        llvm-10 \
         locales \
         metacity \
         ${QT5_VERSION}base \
@@ -93,12 +94,14 @@ RUN set -x \
     && ldconfig
 
 RUN set -x \
-    && curl -fL "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage" > /usr/bin/linuxdeploy \
-    && curl -fL "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage" > /usr/bin/linuxdeploy-plugin-qt \
-    && curl -fL "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage" > /usr/bin/appimagetool \
-    && chmod +x /usr/bin/linuxdeploy \
-    && chmod +x /usr/bin/linuxdeploy-plugin-qt \
-    && chmod +x /usr/bin/appimagetool \
+    && curl -fL "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage" > /usr/local/bin/linuxdeploy \
+    && curl -fL "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage" > /usr/local/bin/linuxdeploy-plugin-qt \
+    && curl -fL "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage" > /usr/local/bin/appimagetool \
+    && curl -fL https://uploader.codecov.io/latest/linux/codecov > /usr/local/bin/codecov \
+    && chmod +x /usr/local/bin/linuxdeploy \
+    && chmod +x /usr/local/bin/linuxdeploy-plugin-qt \
+    && chmod +x /usr/local/bin/appimagetool \
+    && chmod +x /usr/local/bin/codecov \
     && ln -s /usr/bin/clang-format-10 /usr/bin/clang-format
 
 RUN set -x \
