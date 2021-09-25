@@ -23,6 +23,9 @@ ARG QT5_PATCH
 ENV QT5_VERSION=qt5${QT5_MINOR}
 ENV QT5_PPA_VERSION=qt-5.${QT5_MINOR}.${QT5_PATCH}
 
+ENV LLVM_VERSION=10
+ENV PATH="/usr/lib/llvm-${LLVM_VERSION}/bin:${PATH}"
+
 RUN set -x \
     && apt-get update -y \
     && apt-get -y install --no-install-recommends \
@@ -36,8 +39,8 @@ RUN set -x \
     && apt-get install --no-install-recommends -y \
         asciidoctor \
         build-essential \
-        clang-10 \
-        clang-format-10 \
+        clang-${LLVM_VERSION} \
+        clang-format-${LLVM_VERSION} \
         cmake \
         curl \
         dbus \
@@ -58,7 +61,7 @@ RUN set -x \
         libykpers-1-dev \
         libusb-1.0-0-dev \
         libpcsclite-dev \
-        llvm-10 \
+        llvm-${LLVM_VERSION} \
         locales \
         metacity \
         ${QT5_VERSION}base \
