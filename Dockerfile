@@ -89,12 +89,15 @@ RUN set -x && locale-gen en_US.UTF-8
 ENV LANG en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
 
-ENV CMAKE_INCLUDE_PATH="/opt/keepassxc-libs/include"
-ENV CMAKE_LIBRARY_PATH="/opt/keepassxc-libs/lib/x86_64-linux-gnu"
+ENV CMAKE_INCLUDE_PATH="/opt/keepassxc-libs/include:/opt/qt5${QT5_MINOR}/include"
+ENV CMAKE_LIBRARY_PATH="/opt/keepassxc-libs/lib/x86_64-linux-gnu::/opt/qt5${QT5_MINOR}/lib"
 ENV CPATH="${CMAKE_INCLUDE_PATH}"
+ENV PATH="/opt/qt5${QT5_MINOR}/bin:${PATH}"
 
 RUN set -x \
-    && echo "/opt/keepassxc-libs/lib/x86_64-linux-gnu" > /etc/ld.so.conf.d/01-keepassxc.conf \
+    && ln -s /opt/qt515/bin/qt5${QT5_MINOR}-env.sh /etc/profile.d/qt5${QT5_MINOR}-env.sh \
+    && echo "/opt/qt5${QT5_MINOR}/lib" > /etc/ld.so.conf.d/01-qt5.conf \
+    && echo "/opt/keepassxc-libs/lib/x86_64-linux-gnu" > /etc/ld.so.conf.d/02-keepassxc.conf \
     && ldconfig
 
 RUN set -x \
