@@ -62,6 +62,7 @@ RUN set -x \
         libykpers-1-dev \
         libusb-1.0-0-dev \
         libpcsclite-dev \
+        libminizip-dev \
         llvm-${LLVM_VERSION} \
         locales \
         metacity \
@@ -75,7 +76,6 @@ RUN set -x \
         xvfb \
         zlib1g-dev \
         openssh-client \
-        asciidoctor \
     && apt-get autoremove --purge \
     && rm -rf /var/lib/{apt,dpkg,cache,log}/
     
