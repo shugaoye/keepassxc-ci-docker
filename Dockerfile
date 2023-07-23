@@ -63,6 +63,7 @@ RUN set -x \
         libusb-1.0-0-dev \
         libpcsclite-dev \
         libminizip-dev \
+        libkeyutils-dev \
         llvm-${LLVM_VERSION} \
         locales \
         metacity \
