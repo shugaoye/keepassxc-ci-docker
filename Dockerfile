@@ -44,6 +44,10 @@ RUN set -x \
         cmake \
         curl \
         dbus \
+        devscripts \
+        dh-autoreconf \
+        dh-make \
+        fakeroot \
         file \
         fluxbox \
         fuse \
@@ -56,6 +60,7 @@ RUN set -x \
         libomp-dev \
         libqrencode-dev \
         libquazip5-dev \
+        libreadline-dev \
         libsodium-dev \
         libxi-dev \
         libxtst-dev \
@@ -65,6 +70,7 @@ RUN set -x \
         libpcsclite-dev \
         libminizip-dev \
         libkeyutils-dev \
+        libzxcvbn-dev \
         llvm-${LLVM_VERSION} \
         locales \
         metacity \
