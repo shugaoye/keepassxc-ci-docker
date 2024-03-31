@@ -70,6 +70,7 @@ RUN set -x \
         libpcsclite-dev \
         libminizip-dev \
         libkeyutils-dev \
+        libzxcvbn-dev \
         llvm-${LLVM_VERSION} \
         locales \
         metacity \
