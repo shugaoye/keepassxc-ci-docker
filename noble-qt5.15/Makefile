@@ -2,9 +2,9 @@ all: build
 
 .PHONY: build
 build:
-	docker build --platform linux/amd64 $(BUILD_ARGS) -t ghcr.io/keepassxreboot/keepassxc-ci:noble-qt5.15 .
+	docker build --platform linux/amd64 $(BUILD_ARGS) -t devcontainers1/qt5:noble-qt5.15 .
 
 .PHONY: push
 push:
-	docker push ghcr.io/keepassxreboot/keepassxc-ci:noble-qt5.15
+	docker push devcontainers1/qt5:noble-qt5.15
 

@@ -14,7 +14,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-FROM ubuntu:24.04
+ARG DISTRO=ubuntu-24.04
+
+FROM mcr.microsoft.com/devcontainers/cpp:${DISTRO}
 
 ARG LLVM_VERSION=18
 ARG DEBIAN_FRONTEND=noninteractive
@@ -87,12 +89,6 @@ RUN set -x \
     && apt-get autoremove --purge \
     && rm -rf /var/lib/{apt,dpkg,cache,log}/
     
-RUN set -x \
-    && git clone https://github.com/ncopa/su-exec.git \
-    && (cd su-exec; make) \
-    && mv su-exec/su-exec /usr/bin/su-exec \
-    && rm -rf su-exec
-
 RUN set -x && locale-gen en_US.UTF-8
 ENV LANG en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
@@ -115,14 +111,6 @@ RUN set -x \
     && chmod +x /usr/local/bin/appimagetool \
     && chmod +x /usr/local/bin/codecov
 
-#RUN set -x \
-#    && groupadd -g 1000 keepassxc \
-#    && useradd -u 1000 -g keepassxc -d /keepassxc -s /bin/bash keepassxc
-
-# User 1000 already exists in newer base images
-RUN set -x \
-     && groupmod -n keepassxc ubuntu \
-     && usermod -l keepassxc -g keepassxc -d /keepassxc -s /bin/bash ubuntu
 
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 
