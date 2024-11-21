@@ -14,7 +14,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-FROM ubuntu:22.04
+ARG DISTRO=ubuntu-22.04
+
+FROM mcr.microsoft.com/devcontainers/cpp:${DISTRO}
+
 
 ARG LLVM_VERSION=15
 ARG DEBIAN_FRONTEND=noninteractive
@@ -85,20 +88,6 @@ RUN set -x \
     && apt-get autoremove --purge \
     && rm -rf /var/lib/{apt,dpkg,cache,log}/
     
-RUN set -x \
-    && git clone https://github.com/ncopa/su-exec.git \
-    && (cd su-exec; make) \
-    && mv su-exec/su-exec /usr/bin/su-exec \
-    && rm -rf su-exec
-
-# Install Catch2 v3
-RUN set -x \
-    && git clone https://github.com/catchorg/Catch2.git \
-    && cd Catch2 \
-    && git checkout -b version3_5 v3.5.2 \
-    && cmake -Bbuild -H. -DBUILD_TESTING=OFF \
-    && cmake --build build/ --target install
-
 RUN set -x && locale-gen en_US.UTF-8
 ENV LANG en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
@@ -120,15 +109,6 @@ RUN set -x \
     && chmod +x /usr/local/bin/linuxdeploy-plugin-qt \
     && chmod +x /usr/local/bin/appimagetool \
     && chmod +x /usr/local/bin/codecov
-
-RUN set -x \
-    && groupadd -g 1000 keepassxc \
-    && useradd -u 1000 -g keepassxc -d /keepassxc -s /bin/bash keepassxc
-
-# User 1000 already exists in newer base images
-#RUN set -x \
-#     && groupmod -n keepassxc ubuntu \
-#     && usermod -l keepassxc -g keepassxc -d /keepassxc -s /bin/bash ubuntu
 
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 
